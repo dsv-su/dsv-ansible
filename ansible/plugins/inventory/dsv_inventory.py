@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from ansible.plugins.inventory import BaseInventoryPlugin
+# This is probably a horrible hack:
 try:
     from collections.abc import MutableMapping
 except ImportError:
