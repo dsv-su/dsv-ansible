@@ -1,0 +1,20 @@
+# python stuff
+*.py[co]
+build
+AUTHORS.TXT
+
+# emacs
+*~
+.\#*
+\#*
+
+# mac
+.DS_Store
+
+# vim
+*.swp
+*.swo
+credentials.yml
+
+# dev
+venv
