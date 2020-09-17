@@ -1,13 +1,15 @@
 #!/usr/bin/python
 
-from ansible.plugins.inventory import BaseInventoryPlugin
 # This is probably a horrible hack:
 try:
     from collections.abc import MutableMapping
 except ImportError:
     from collections import MutableMapping
 
-EXAMPLES = '''
+from ansible.plugins.inventory import BaseInventoryPlugin
+from ansible.errors import AnsibleParserError
+
+EXAMPLES = """
 server1:
  - group1
  - group2
@@ -18,9 +20,10 @@ server2:
  - group1
  - group3
  - host-var2: thirdvalue
-'''
+"""
 
 NAME = 'dsv_inventory'
+
 
 class InventoryModule(BaseInventoryPlugin):
     NAME = 'dsv_inventory'
@@ -43,7 +46,9 @@ class InventoryModule(BaseInventoryPlugin):
         if not data:
             raise AnsibleParserError('Parsed empty YAML file')
         if not isinstance(data, MutableMapping):
-            raise AnsibleParserError('YAML inventory has invalid structure, it should be a dictionary, got: %s' % type(data))
+            raise AnsibleParserError('YAML inventory has invalid structure, '
+                                     'it should be a dictionary, '
+                                     'got: %s' % type(data))
 
         for host in data:
             self._parse_host(host, data[host])
